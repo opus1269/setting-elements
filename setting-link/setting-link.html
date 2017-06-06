@@ -1,0 +1,126 @@
+<!--
+  ~ Copyright (c) 2016-2017, Michael A. Updike All rights reserved.
+  ~ Licensed under Apache 2.0
+  ~ https://opensource.org/licenses/Apache-2.0
+  ~ https://github.com/opus1269/setting-elements/blob/master/LICENSE.md
+  -->
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../paper-styles/typography.html">
+<link rel="import" href="../paper-styles/color.html">
+<link rel="import" href="../iron-flex-layout/iron-flex-layout-classes.html">
+
+<link rel="import" href="../paper-ripple/paper-ripple.html">
+<link rel="import" href="../paper-item/paper-icon-item.html">
+
+<script type="text/javascript" src="../chrome-extension-utils/exception_handler.js"></script>
+
+<dom-module id="setting-link">
+  <style include="iron-flex iron-flex-alignment"></style>
+  <style include="shared-styles"></style>
+  <template>
+    <style>
+      :host {
+        display: block;
+        position: relative;
+      }
+
+      :host([disabled]) {
+        pointer-events: none;
+      }
+
+      :host paper-icon-item {
+        --paper-item-focused-before: {
+          background: transparent;
+        };
+        --paper-item-selected: {
+          background: transparent;
+        };
+        padding-top: 4px;
+        padding-bottom: 4px;
+        cursor: pointer;
+      }
+
+      :host iron-icon {
+        color: var(--setting-item-color);
+      }
+
+      :host paper-ripple {
+        color: var(--setting-item-color);
+      }
+
+      :host .divider {
+        margin-left: 72px;
+        margin-right: 0;
+      }
+    </style>
+
+    <div class="section-title setting-label" tabindex="-1" hidden$="[[!sectionTitle]]">
+      {{sectionTitle}}
+    </div>
+
+    <paper-icon-item on-tap="_onLinkTapped" class="flex">
+      <paper-ripple center></paper-ripple>
+      <iron-icon icon=[[icon]] item-icon></iron-icon>
+      <span class="setting-label">[[label]]</span>
+    </paper-icon-item>
+
+    <hr class="divider" hidden$="[[noseparator]]"/>
+
+  </template>
+</dom-module>
+
+<script>
+  'use strict';
+
+  new ExceptionHandler();
+
+  Polymer({
+    is: 'setting-link',
+
+    properties: {
+      name: {
+        type: String,
+        value: 'unknown',
+      },
+
+      label: {
+        type: String,
+        value: '',
+      },
+
+      sectionTitle: {
+        type: String,
+        value: '',
+      },
+
+      icon: {
+        type: String,
+        value: '',
+      },
+
+      url: {
+        type: String,
+        value: '',
+      },
+
+      disabled: {
+        type: Boolean,
+        value: false,
+      },
+
+      noseparator: {
+        type: Boolean,
+        value: false,
+      },
+    },
+
+    /**
+     * Event: Show url on tap of item
+     * @private
+     */
+    _onLinkTapped: function() {
+      Chrome.GA.event(Chrome.GA.EVENT.LINK, this.name);
+      chrome.tabs.create({url: this.url});
+    },
+  });
+</script>

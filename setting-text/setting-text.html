@@ -1,0 +1,145 @@
+<!--
+  ~ Copyright (c) 2016-2017, Michael A. Updike All rights reserved.
+  ~ Licensed under Apache 2.0
+  ~ https://opensource.org/licenses/Apache-2.0
+  ~ https://github.com/opus1269/setting-elements/blob/master/LICENSE.md
+  -->
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../paper-styles/typography.html">
+<link rel="import" href="../paper-styles/color.html">
+<link rel="import" href="../iron-localstorage/iron-localstorage.html">
+<link rel="import" href="../paper-item/paper-item.html">
+<link rel="import" href="../paper-item/paper-item-body.html">
+<link rel="import" href="../paper-input/paper-input.html">
+
+<dom-module id="setting-text">
+  <style include="shared-styles"></style>
+  <template>
+    <style>
+
+      :host {
+        display: block;
+        position: relative;
+      }
+
+      :host([disabled]) {
+        pointer-events: none;
+      }
+
+      :host([indent]) paper-item {
+        padding-left: 24px;
+      }
+
+      :host paper-input {
+        width: 175px;
+
+        --paper-input-container-input: {
+          text-align: right;
+        };
+      }
+
+    </style>
+
+    <div class="section-title setting-label" tabindex="-1" hidden$="[[!sectionTitle]]">{{sectionTitle}}</div>
+    <paper-item class="center horizontal layout" tabindex="-1">
+      <paper-item-body class="flex" two-line>
+        <div class="setting-label" hidden$="[[!mainLabel]]">{{mainLabel}}</div>
+        <div class="setting-label" secondary hidden$="[[!secondaryLabel]]">{{secondaryLabel}}</div>
+      </paper-item-body>
+      <paper-input id="text" value="{{value}}" minlength="1" maxlength="{{maxLength}}"
+                   placeholder="{{placeholder}}" tabindex="0" disabled$="[[disabled]]"
+                   on-blur="_onBlur" on-keyup="_onKeyUp"></paper-input>
+    </paper-item>
+    <hr hidden$="[[noseparator]]"/>
+    <iron-localstorage name="{{name}}" value="{{value}}" on-iron-localstorage-load-empty="_init"></iron-localstorage>
+
+  </template>
+</dom-module>
+
+<script>
+  'use strict';
+
+  new ExceptionHandler();
+
+  Polymer({
+    is: 'setting-text',
+
+    hostAttributes: {
+      role: 'group',
+      tabIndex: -1,
+    },
+
+    properties: {
+
+      name: {
+        type: String,
+        value: 'store',
+      },
+
+      value: {
+        type: String,
+        value: '',
+        notify: true,
+      },
+
+      placeholder: {
+        type: String,
+        value: 'e.g. Text',
+        notify: true,
+      },
+
+      maxLength: {
+        type: Number,
+        value: '16',
+        notify: true,
+      },
+
+      mainLabel: {
+        type: String,
+        value: '',
+      },
+
+      secondaryLabel: {
+        type: String,
+        value: '',
+      },
+
+      sectionTitle: {
+        type: String,
+        value: '',
+      },
+
+      disabled: {
+        type: Boolean,
+        value: false,
+      },
+
+      noseparator: {
+        type: Boolean,
+        value: false,
+      },
+
+    },
+
+    // fire event when input loses focus
+    _onBlur: function() {
+      Chrome.GA.event(Chrome.GA.EVENT.TEXT, this.name);
+      this.fire('setting-text-changed', {value: this.value});
+    },
+
+    // fire event when Enter is pressed in input
+    _onKeyUp: function(event) {
+      // check if 'enter' was pressed
+      if (event.keyCode === 13) {
+        Chrome.GA.event(Chrome.GA.EVENT.TEXT, this.name);
+        this.fire('setting-text-changed', {value: this.value});
+      }
+    },
+
+    // initialize value if it is not in local storage
+    _init: function() {
+      this.set('value', '');
+    },
+
+  });
+</script>
