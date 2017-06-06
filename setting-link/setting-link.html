@@ -41,14 +41,6 @@
         cursor: pointer;
       }
 
-      :host iron-icon {
-        color: var(--setting-item-color);
-      }
-
-      :host paper-ripple {
-        color: var(--setting-item-color);
-      }
-
       :host .divider {
         margin-left: 72px;
         margin-right: 0;
@@ -61,7 +53,7 @@
 
     <paper-icon-item on-tap="_onLinkTapped" class="flex">
       <paper-ripple center></paper-ripple>
-      <iron-icon icon=[[icon]] item-icon></iron-icon>
+      <iron-icon class="setting-link-icon" icon=[[icon]] item-icon></iron-icon>
       <span class="setting-label">[[label]]</span>
     </paper-icon-item>
 
