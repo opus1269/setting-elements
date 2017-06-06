@@ -1,0 +1,33 @@
+<!--
+  ~ Copyright (c) 2016-2017, Michael A. Updike All rights reserved.
+  ~ Licensed under Apache 2.0
+  ~ https://opensource.org/licenses/Apache-2.0
+  ~ https://github.com/opus1269/setting-elements/blob/master/LICENSE.md
+  -->
+<link rel="import" href="../../polymer/polymer.html">
+
+<script>
+	'use strict';
+	window.app = window.app || {};
+	/**
+	 * Behavior for internationalizing strings
+	 * @polymerBehavior app.LocalizeBehavior
+	 */
+	app.LocalizeBehavior = {
+
+		properties: {
+			/**
+			 * Get a string
+			 */
+			localize: {
+				type: Function,
+				value: function() {
+					return function() {
+						const messageName = arguments[0];
+						return app.Utils.localize(messageName);
+					};
+				},
+			},
+		},
+	};
+</script>
