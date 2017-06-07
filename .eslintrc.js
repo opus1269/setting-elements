@@ -6,7 +6,7 @@
  */
 
 module.exports = {
-  'extends': [
+  "extends": [
     'eslint:recommended',
     'google',
     'plugin:promise/recommended',
@@ -32,6 +32,7 @@ module.exports = {
     'ExceptionHandler': true,
     'Headers': true,
     'ga': true,
+    'module:': true,
   },
 
   'rules': {

@@ -57,7 +57,8 @@ gulp.task('watch', ['lintjs'],
 
 // lint Javascript
 gulp.task('lintjs', function() {
-  return gulp.src([files.scripts, './gulpfile.js', './.eslintrc.js']).
+  return gulp.src([files.scripts, files.html, '!node_modules/**',
+    './gulpfile.js', './.eslintrc.js']).
       pipe(plugins.changed(base.dest)).
       pipe(plugins.eslint()).
       pipe(plugins.eslint.format()).
