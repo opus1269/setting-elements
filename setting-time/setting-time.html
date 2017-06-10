@@ -196,9 +196,9 @@
     _formatTime: function(timeString) {
       let ret = '12:00 AM';
       if (timeString) {
-        ret = app.Time.getStringFull(timeString, this.format);
+        ret = Chrome.Time.getStringFull(timeString, this.format);
       } else {
-        app.GA.error('timeString is null', 'setting-time._formatTime');
+        Chrome.GA.error('timeString is null', 'setting-time._formatTime');
       }
       return ret;
     },
