@@ -198,7 +198,7 @@
       if (timeString) {
         ret = Chrome.Time.getStringFull(timeString, this.format);
       } else {
-        Chrome.GA.error('timeString is null', 'setting-time._formatTime');
+        Chrome.Log.error('timeString is null', 'setting-time._formatTime');
       }
       return ret;
     },
