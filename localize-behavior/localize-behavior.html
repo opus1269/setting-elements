@@ -18,19 +18,19 @@
 	 */
   Chrome.LocalizeBehavior = {
 
-		properties: {
-			/**
-			 * Get a string
-			 */
-			localize: {
-				type: Function,
-				value: function() {
-					return function() {
-						const messageName = arguments[0];
-						return Chrome.Locale.localize(messageName);
-					};
-				},
-			},
-		},
-	};
+    properties: {
+      /**
+       * Get a string
+       */
+      localize: {
+        type: Function,
+        value: function() {
+          return function() {
+            const messageName = arguments[0];
+            return Chrome.Locale.localize(messageName);
+          };
+        },
+      },
+    },
+  };
 </script>
