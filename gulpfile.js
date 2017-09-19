@@ -21,12 +21,13 @@ const files = {
   html: `${path.html}**/*.html`,
 };
 
+const del = require('del');
 const gulp = require('gulp');
 const gutil = require('gulp-util');
 // load the rest
 const plugins = require('gulp-load-plugins')({
   pattern: ['gulp-*', 'gulp.*'],
-  replaceString: /\bgulp[\-.]/,
+  replaceString: /\bgulp[-.]/,
 });
 
 /**
@@ -77,4 +78,8 @@ gulp.task('polylint', function() {
     }));
 });
 
+// clean output directories
+gulp.task('clean', () => {
+  return del(base.dest);
+});
 
