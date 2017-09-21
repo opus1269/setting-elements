@@ -37,7 +37,7 @@
     "paper-checkbox": "PolymerElements/paper-checkbox#^1.0.0",
     "paper-dropdown-menu": "PolymerElements/paper-dropdown-menu#^1.0.0",
     "paper-time-picker": "bendavis78/paper-time-picker#^1.0.0",
-    "chrome-extension-utils": "opus1269/chrome-extension-utils#^2.0.0"
+    "chrome-extension-utils": "opus1269/chrome-extension-utils#^3.0.0"
   },
   "ignore": [
     "**/.*",
