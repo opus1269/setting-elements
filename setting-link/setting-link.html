@@ -67,40 +67,72 @@
 
   new ExceptionHandler();
 
+  /**
+   * Polymer element to display a url link
+   * @namespace SettingLink
+   */
   Polymer({
     is: 'setting-link',
 
     properties: {
+      /**
+       * Element name
+       * @memberOf SettingLink
+       */
       name: {
         type: String,
         value: 'unknown',
       },
 
+      /**
+       * Link description
+       * @memberOf SettingLink
+       */
       label: {
         type: String,
         value: '',
       },
 
-      sectionTitle: {
-        type: String,
-        value: '',
-      },
-
+      /**
+       * Link icon
+       * @memberOf SettingLink
+       */
       icon: {
         type: String,
         value: '',
       },
 
+      /**
+       * Link url
+       * @memberOf SettingLink
+       */
       url: {
         type: String,
         value: '',
       },
 
+      /**
+       * Optional group title
+       * @memberOf SettingLink
+       */
+      sectionTitle: {
+        type: String,
+        value: '',
+      },
+
+      /**
+       * Disabled state of element
+       * @memberOf SettingLink
+       */
       disabled: {
         type: Boolean,
         value: false,
       },
 
+      /**
+       * Visibility state of optional divider
+       * @memberOf SettingLink
+       */
       noseparator: {
         type: Boolean,
         value: false,
@@ -108,8 +140,9 @@
     },
 
     /**
-     * Event: Show url on tap of item
+     * Event: Item tapped - show url in new tab
      * @private
+     * @memberOf SettingLink
      */
     _onLinkTapped: function() {
       Chrome.GA.event(Chrome.GA.EVENT.LINK, this.name);
