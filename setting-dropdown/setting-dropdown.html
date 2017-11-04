@@ -58,7 +58,8 @@
       </paper-dropdown-menu>
     </paper-item>
     <hr hidden$="[[noseparator]]"/>
-    <iron-localstorage name="{{name}}" value="{{value}}" on-iron-localstorage-load-empty="_init"></iron-localstorage>
+    <iron-localstorage name="{{name}}" value="{{value}}"
+                       on-iron-localstorage-load-empty="_init"></iron-localstorage>
 
   </template>
 </dom-module>
@@ -68,26 +69,46 @@
 
   new ExceptionHandler();
 
+  /**
+   * Polymer element to select an item from a list
+   * @namespace SettingDropdown
+   */
   Polymer({
     is: 'setting-dropdown',
 
     properties: {
+      /**
+       * Local storage key
+       * @memberOf SettingDropdown
+       */
       name: {
         type: String,
         value: 'store',
       },
 
+      /**
+       * Menu description
+       * @memberOf SettingDropdown
+       */
+      label: {
+        type: String,
+        value: '',
+      },
+
+      /**
+       * Selected menu item index
+       * @memberOf SettingDropdown
+       */
       value: {
         type: Number,
         value: 0,
         notify: true,
       },
 
-      label: {
-        type: String,
-        value: '',
-      },
-
+      /**
+       * Array of Menu item labels
+       * @memberOf SettingDropdown
+       */
       items: {
         type: Array,
         value: function() {
@@ -95,16 +116,28 @@
         },
       },
 
+      /**
+       * Optional group title
+       * @memberOf SettingDropdown
+       */
       sectionTitle: {
         type: String,
         value: '',
       },
 
+      /**
+       * Disabled state of element
+       * @memberOf SettingDropdown
+       */
       disabled: {
         type: Boolean,
         value: false,
       },
 
+      /**
+       * Visibility state of optional divider
+       * @memberOf SettingDropdown
+       */
       noseparator: {
         type: Boolean,
         value: false,

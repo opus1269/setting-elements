@@ -13,7 +13,8 @@
 <link rel="import" href="../../paper-item/paper-item-body.html">
 <link rel="import" href="../../paper-input/paper-input.html">
 
-<script type="text/javascript" src="../../chrome-extension-utils/scripts/exception_handler.js"></script>
+<script type="text/javascript"
+        src="../../chrome-extension-utils/scripts/exception_handler.js"></script>
 
 <dom-module id="setting-text">
   <style include="iron-flex iron-flex-alignment"></style>
@@ -44,18 +45,26 @@
 
     </style>
 
-    <div class="section-title setting-label" tabindex="-1" hidden$="[[!sectionTitle]]">{{sectionTitle}}</div>
+    <div class="section-title setting-label" tabindex="-1"
+         hidden$="[[!sectionTitle]]">{{sectionTitle}}
+    </div>
     <paper-item class="center horizontal layout" tabindex="-1">
       <paper-item-body class="flex" two-line>
         <div class="setting-label" hidden$="[[!mainLabel]]">{{mainLabel}}</div>
-        <div class="setting-label" secondary hidden$="[[!secondaryLabel]]">{{secondaryLabel}}</div>
+        <div class="setting-label" secondary hidden$="[[!secondaryLabel]]">
+          {{secondaryLabel}}
+        </div>
       </paper-item-body>
-      <paper-input id="text" value="{{value}}" minlength="1" maxlength="{{maxLength}}"
-                   placeholder="{{placeholder}}" tabindex="0" disabled$="[[disabled]]"
+      <paper-input id="text" value="{{value}}" minlength="1"
+                   maxlength="{{maxLength}}"
+                   placeholder="{{placeholder}}" tabindex="0"
+                   disabled$="[[disabled]]"
                    on-blur="_onBlur" on-keyup="_onKeyUp"></paper-input>
     </paper-item>
     <hr hidden$="[[noseparator]]"/>
-    <iron-localstorage name="{{name}}" value="{{value}}" on-iron-localstorage-load-empty="_init"></iron-localstorage>
+    <iron-localstorage
+        name="{{name}}" value="{{value}}"
+        on-iron-localstorage-load-empty="_init"></iron-localstorage>
 
   </template>
 </dom-module>
@@ -65,6 +74,10 @@
 
   new ExceptionHandler();
 
+  /**
+   * Polymer element for a text entry
+   * @namespace SettingText
+   */
   Polymer({
     is: 'setting-text',
 
@@ -74,76 +87,122 @@
     },
 
     properties: {
-
+      /**
+       * Local storage key
+       * @memberOf SettingText
+       */
       name: {
         type: String,
         value: 'store',
       },
 
+      /**
+       * Text value
+       * @memberOf SettingText
+       */
       value: {
         type: String,
         value: '',
         notify: true,
       },
 
+      /**
+       * Placeholder text when empty
+       * @memberOf SettingText
+       */
       placeholder: {
         type: String,
         value: 'e.g. Text',
         notify: true,
       },
 
+      /**
+       * Max length of text entry
+       * @memberOf SettingText
+       */
       maxLength: {
         type: Number,
         value: '16',
         notify: true,
       },
 
+      /**
+       * Descriptive label
+       * @memberOf SettingText
+       */
       mainLabel: {
         type: String,
         value: '',
       },
 
+      /**
+       * Secondary descriptive label
+       * @memberOf SettingText
+       */
       secondaryLabel: {
         type: String,
         value: '',
       },
 
+      /**
+       * Optional group title
+       * @memberOf SettingText
+       */
       sectionTitle: {
         type: String,
         value: '',
       },
 
+      /**
+       * Disabled state of element
+       * @memberOf SettingText
+       */
       disabled: {
         type: Boolean,
         value: false,
       },
 
+      /**
+       * Visibility state of optional divider
+       * @memberOf SettingText
+       */
       noseparator: {
         type: Boolean,
         value: false,
       },
-
     },
 
-    // fire event when input loses focus
+    /**
+     * Event: Lost focus - fire setting-text-changed event
+     * @private
+     * @memberOf SettingText
+     */
     _onBlur: function() {
       Chrome.GA.event(Chrome.GA.EVENT.TEXT, this.name);
       this.fire('setting-text-changed', {value: this.value});
     },
 
-    // fire event when Enter is pressed in input
+    /**
+     * Event: keyup - fire setting-text-changed event on 'Enter'
+     * @param {Event} event - key event
+     * @private
+     * @memberOf SettingText
+     */
     _onKeyUp: function(event) {
-      // check if 'enter' was pressed
+      // check if 'Enter' was pressed
       if (event.keyCode === 13) {
         Chrome.GA.event(Chrome.GA.EVENT.TEXT, this.name);
         this.fire('setting-text-changed', {value: this.value});
       }
     },
 
-    // initialize value if it is not in local storage
+    /**
+     * Initialize value if it is not in localstorage
+     * @private
+     * @memberOf SettingText
+     */
     _init: function() {
       this.set('value', '');
     },
-
   });
 </script>

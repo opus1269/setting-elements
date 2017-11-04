@@ -72,9 +72,9 @@
       <div class="horizontal layout">
         <paper-slider class="flex" editable value="{{value.display}}"
                       min="{{unit.min}}" max="{{unit.max}}" step="{{unit.step}}"
-                      disabled$="[[disabled]]" on-change="_sliderValueChanged"></paper-slider>
+                      disabled$="[[disabled]]" on-change="_onSliderValueChanged"></paper-slider>
         <paper-dropdown-menu disabled$="[[disabled]]" noink no-label-float>
-          <paper-menu id="menu" class="dropdown-content" selected="{{value.unit}}" on-iron-select="_unitChanged">
+          <paper-menu id="menu" class="dropdown-content" selected="{{value.unit}}" on-iron-select="_onUnitChanged">
             <template is="dom-repeat" as="unit" items="[[units]]">
               <paper-item>[[unit.name]]</paper-item>
             </template>
@@ -95,20 +95,36 @@
 
   new ExceptionHandler();
 
+  /**
+   * Polymer element to select a value with a slider
+   * @namespace SettingSlider
+   */
   Polymer({
     is: 'setting-slider',
 
     properties: {
+      /**
+       * Local storage key
+       * @memberOf SettingSlider
+       */
       name: {
         type: String,
         value: 'store',
       },
 
+      /**
+       * Slider description
+       * @memberOf SettingSlider
+       */
       label: {
         type: String,
         value: '',
       },
 
+      /**
+       * Object containing slider value and display unit index
+       * @memberOf SettingSlider
+       */
       value: {
         type: Object,
         notify: true,
@@ -117,6 +133,10 @@
         },
       },
 
+      /**
+       * Array of unit labels
+       * @memberOf SettingSlider
+       */
       units: {
         type: Array,
         value: function() {
@@ -124,16 +144,28 @@
         },
       },
 
+      /**
+       * Optional group title
+       * @memberOf SettingSlider
+       */
       sectionTitle: {
         type: String,
         value: '',
       },
 
+      /**
+       * Disabled state of element
+       * @memberOf SettingSlider
+       */
       disabled: {
         type: Boolean,
         value: false,
       },
 
+      /**
+       * Visibility state of optional divider
+       * @memberOf SettingSlider
+       */
       noseparator: {
         type: Boolean,
         value: false,
@@ -141,8 +173,37 @@
     },
 
     /**
+     * Event: User changed slider value
+     * @private
+     * @memberOf SettingSlider
+     */
+    _onSliderValueChanged: function() {
+      this._setBase();
+    },
+
+    /**
+     * Event: Display unit was changed
+     * @private
+     * @memberOf SettingSlider
+     */
+    _onUnitChanged: function() {
+      this.$.selector.select(this.units[this.value.unit]);
+      this._setBase();
+    },
+    
+    /**
+     * Set the base value
+     * @private
+     * @memberOf SettingSlider
+     */
+    _setBase: function() {
+      this.set('value.base', this.unit.mult * this.value.display);
+    },
+
+    /**
      * Initialize value if it is not in localstorage
      * @private
+     * @memberOf SettingSlider
      */
     _initValue: function() {
       this.value = {
@@ -150,31 +211,6 @@
         display: 10,
         unit: 0,
       };
-    },
-
-    /**
-     * Set the base value
-     * @private
-     */
-    _setBase: function() {
-      this.set('value.base', this.unit.mult * this.value.display);
-    },
-
-    /**
-     * Event: User changed slider value
-     * @private
-     */
-    _sliderValueChanged: function() {
-      this._setBase();
-    },
-
-    /**
-     * Event: Display unit was changed
-     * @private
-     */
-    _unitChanged: function() {
-      this.$.selector.select(this.units[this.value.unit]);
-      this._setBase();
     },
   });
 </script>

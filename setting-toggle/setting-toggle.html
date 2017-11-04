@@ -77,41 +77,73 @@
 
   new ExceptionHandler();
 
+  /**
+   * Polymer element for a text entry
+   * @namespace SettingToggle
+   */
   Polymer({
     is: 'setting-toggle',
 
     properties: {
+      /**
+       * Local storage key
+       * @memberOf SettingToggle
+       */
       name: {
         type: String,
         value: 'store',
       },
 
+      /**
+       * Toggle checked state
+       * @memberOf SettingToggle
+       */
       checked: {
         type: Boolean,
         value: false,
         notify: true,
       },
 
+      /**
+       * Toggle descriptive label
+       * @memberOf SettingToggle
+       */
       mainLabel: {
         type: String,
         value: '',
       },
 
+      /**
+       * Toggle secondary descriptive label
+       * @memberOf SettingToggle
+       */
       secondaryLabel: {
         type: String,
         value: '',
       },
 
+      /**
+       * Optional group title
+       * @memberOf SettingToggle
+       */
       sectionTitle: {
         type: String,
         value: '',
       },
 
+      /**
+       * Disabled state of element
+       * @memberOf SettingToggle
+       */
       disabled: {
         type: Boolean,
         value: false,
       },
 
+      /**
+       * Visibility state of optional divider
+       * @memberOf SettingToggle
+       */
       noseparator: {
         type: Boolean,
         value: false,
@@ -121,6 +153,7 @@
     /**
      * Set the checked state of the toggle
      * @param {boolean} checked - checked state
+     * @memberOf SettingToggle
      */
     setChecked: function(checked) {
       this.set('checked', checked);
@@ -129,6 +162,8 @@
 
     /**
      * Event: checked state changed
+     * @private
+     * @memberOf SettingToggle
      */
     _onChange: function() {
       Chrome.GA.event(Chrome.GA.EVENT.TOGGLE, `${this.name}: ${this.checked}`);
@@ -137,6 +172,7 @@
     /**
      * Initialize value if it is not in localStorage
      * @private
+     * @memberOf SettingToggle
      */
     _init: function() {
       this.set('checked', 'false');
