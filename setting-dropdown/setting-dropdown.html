@@ -147,6 +147,8 @@
     /**
      * Event: menu item tapped
      * @param {Event} ev - tap event
+     * @private
+     * @memberOf SettingDropdown
      */
     _onItemSelected: function(ev) {
       const model = this.$.t.modelForElement(ev.target);
@@ -159,6 +161,7 @@
     /**
      * Initialize value if it is not in localstorage
      * @private
+     * @memberOf SettingDropdown
      */
     _init: function() {
       this.set('value', '0');
