@@ -178,6 +178,7 @@
      * @memberOf SettingSlider
      */
     _onSliderValueChanged: function() {
+      Chrome.GA.event(Chrome.GA.EVENT.SLIDER_VALUE, this.name);
       this._setBase();
     },
 
@@ -187,6 +188,7 @@
      * @memberOf SettingSlider
      */
     _onUnitChanged: function() {
+      Chrome.GA.event(Chrome.GA.EVENT.SLIDER_UNITS, this.name);
       this.$.selector.select(this.units[this.value.unit]);
       this._setBase();
     },
