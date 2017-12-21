@@ -15,7 +15,8 @@
 <link rel="import" href="../../paper-menu/paper-menu.html">
 <link rel="import" href="../../paper-dropdown-menu/paper-dropdown-menu.html">
 
-<script type="text/javascript" src="../../chrome-extension-utils/scripts/exception_handler.js"></script>
+<script type="text/javascript"
+        src="../../chrome-extension-utils/scripts/exception_handler.js"></script>
 
 <dom-module id="setting-slider">
   <template>
@@ -62,7 +63,8 @@
 
     </style>
 
-    <div class="section-title setting-label" tabindex="-1" hidden$="[[!sectionTitle]]">
+    <div class="section-title setting-label" tabindex="-1"
+         hidden$="[[!sectionTitle]]">
       {{sectionTitle}}
     </div>
     <div>
@@ -72,15 +74,18 @@
       <div class="horizontal layout">
         <paper-slider class="flex" editable value="{{value.display}}"
                       min="{{unit.min}}" max="{{unit.max}}" step="{{unit.step}}"
-                      disabled$="[[disabled]]" on-change="_onSliderValueChanged"></paper-slider>
+                      disabled$="[[disabled]]"
+                      on-change="_onSliderValueChanged"></paper-slider>
         <paper-dropdown-menu disabled$="[[disabled]]" noink no-label-float>
-          <paper-menu id="menu" class="dropdown-content" selected="{{value.unit}}" on-iron-select="_onUnitChanged">
+          <paper-menu id="menu" class="dropdown-content"
+                      selected="{{value.unit}}" on-iron-select="_onUnitChanged">
             <template is="dom-repeat" as="unit" items="[[units]]">
               <paper-item>[[unit.name]]</paper-item>
             </template>
           </paper-menu>
         </paper-dropdown-menu>
-        <array-selector id="selector" items="[[units]]" selected="{{unit}}"></array-selector>
+        <array-selector id="selector" items="[[units]]"
+                        selected="{{unit}}"></array-selector>
       </div>
     </div>
     <iron-localstorage name="{{name}}" value="{{value}}"
@@ -188,11 +193,14 @@
      * @memberOf SettingSlider
      */
     _onUnitChanged: function() {
-      Chrome.GA.event(Chrome.GA.EVENT.SLIDER_UNITS, this.name);
+      if (this.$.selector.selectedItem) {
+        // skip logging of initial selection
+        Chrome.GA.event(Chrome.GA.EVENT.SLIDER_UNITS, this.name);
+      }
       this.$.selector.select(this.units[this.value.unit]);
       this._setBase();
     },
-    
+
     /**
      * Set the base value
      * @private
